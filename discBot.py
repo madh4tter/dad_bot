@@ -16,7 +16,7 @@ async def on_message(message):
         return
 
 
-    if message.content.startswith("I'm") or message.content.startswith("im") or message.content.startswith("i'm") :
+    if message.content.startswith("I'm ") or message.content.startswith("im ") or message.content.startswith("i'm ") :
         response = "Hi " + str(message.content[3:]).strip() + ", I'm dad!"
         await message.channel.send(response)
 
