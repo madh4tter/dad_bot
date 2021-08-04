@@ -1,9 +1,15 @@
 # bot.py
 import os
 import random
+import datetime
 
 import discord
+from discord import file
+from discord.channel import TextChannel
 from dotenv import load_dotenv
+
+t_offset = datetime.timedelta(hours = 10)
+repeat = 0
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -12,12 +18,23 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
+    global repeat
     if message.author == client.user:
         return
-
-
-    if message.content.startswith("I'm ") or message.content.startswith("im ") or message.content.startswith("i'm ") :
+  
+    if message.content.startswith("I'm ") or message.content.startswith("im ") or message.content.startswith("i'm ") or message.content.startswith("Im ") or message.content.startswith("iM ") :
         response = "Hi " + str(message.content[3:]).strip() + ", I'm dad!"
         await message.channel.send(response)
+    
+    if str((message.created_at + t_offset).weekday()) == '5':
+        if repeat == 0:
+            repeat = 1
+            channel = client.get_channel(289773173384151040)
+            await channel.send(file = discord.File('ah_yes.webm'))
+
+
+    if str((message.created_at + t_offset).weekday()) != '2':
+        repeat = 0
+
 
 client.run(TOKEN)
