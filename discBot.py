@@ -21,6 +21,16 @@ async def on_message(message):
     global repeat
     if message.author == client.user:
         return
+
+    if message.content.startswith("!joke"):
+        with open('jokes.txt', encoding="UTF-8") as f:
+            lines = f.readlines()
+            pre = random.choice(lines)
+            pre = pre.split(" ||")
+            output = pre[0] + "\n" + pre[1]
+            await message.channel.send(output)
+
+
   
     if message.content.startswith("I'm ") or message.content.startswith("im ") or message.content.startswith("i'm ") or message.content.startswith("Im ") or message.content.startswith("iM ") :
         response = "Hi " + str(message.content[3:]).strip() + ", I'm dad!"
@@ -31,10 +41,7 @@ async def on_message(message):
             repeat = 1
             channel = client.get_channel(289773173384151040)
             await channel.send(file = discord.File('ah_yes.webm'))
-
-
-    if str((message.created_at + t_offset).weekday()) != '2':
+    else:
         repeat = 0
-
 
 client.run(TOKEN)
