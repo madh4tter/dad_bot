@@ -26,8 +26,8 @@ async def on_message(message):
         with open('jokes.txt', encoding="UTF-8") as f:
             lines = f.readlines()
             pre = random.choice(lines)
-            pre = pre.split(" ||")
-            output = pre[0] + "\n" + pre[1]
+            pre = pre.split("||")
+            output = pre[0].strip() + "\n" + pre[1].strip()
             await message.channel.send(output)
 
 
