@@ -2,6 +2,7 @@
 import os
 import random
 import datetime
+import re
 
 import discord
 from discord import file
@@ -30,12 +31,12 @@ async def on_message(message):
             output = pre[0].strip() + "\n" + pre[1].strip()
             await message.channel.send(output)
 
-
-  
-    if message.content.startswith("I'm ") or message.content.startswith("im ") or message.content.startswith("i'm ") or message.content.startswith("Im ") or message.content.startswith("iM ") :
-        response = "Hi " + str(message.content[3:]).strip() + ", I'm dad!"
+    check = re.compile(r"\A[Ii][']?[mM]\s")
+    match = check.search(message.content[:4])
+    if match:
+        response = "Hi " + str(message.content[3:]).strip() + ", I'm Dad!"
         await message.channel.send(response)
-    
+  
     if str((message.created_at + t_offset).weekday()) == '5':
         if repeat == 0:
             repeat = 1
