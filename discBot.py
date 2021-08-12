@@ -15,21 +15,13 @@ repeat = 0
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='!')
 
-@client.event
+@bot.event
 async def on_message(message):
     global repeat
     if message.author == client.user:
         return
-
-    if message.content.startswith("!joke"):
-        with open('jokes.txt', encoding="UTF-8") as f:
-            lines = f.readlines()
-            pre = random.choice(lines)
-            pre = pre.split("||")
-            output = pre[0].strip() + "\n" + pre[1].strip()
-            await message.channel.send(output)
 
     check = re.compile(r"\A[Ii][']?[mM]\s")
     match = check.search(message.content[:4])
@@ -49,4 +41,15 @@ async def on_message(message):
         response = "KEEP IT DOWN " + message.author() + "!"
         await channel.send(response)
 
-client.run(TOKEN)
+@bot.command(name='joke', help='Responds with a randomly selected dad joke')
+async def joke(ctx):
+        with open('jokes.txt', encoding="UTF-8") as f:
+            lines = f.readlines()
+            pre = random.choice(lines)
+            pre = pre.split("||")
+            output = pre[0].strip() + "\n" + pre[1].strip()
+            await ctx.channel.send(output)
+
+    
+
+bot.run(TOKEN)
