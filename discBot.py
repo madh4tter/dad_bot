@@ -9,7 +9,7 @@ from discord import file
 from discord.channel import TextChannel
 from dotenv import load_dotenv
 
-t_offset = datetime.timedelta(hours = 10)
+t_offset = datetime.timedelta(hours = 17)
 repeat = 0
 
 load_dotenv()
@@ -44,5 +44,9 @@ async def on_message(message):
             await channel.send(file = discord.File('ah_yes.webm'))
     else:
         repeat = 0
+        
+    if message.content().upper() == message.content():
+        response = "KEEP IT DOWN " + message.author() + "!"
+        await channel.send(response)
 
 client.run(TOKEN)
