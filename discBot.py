@@ -9,7 +9,7 @@ from discord import file
 from discord.channel import TextChannel
 from dotenv import load_dotenv
 
-t_offset = datetime.timedelta(hours = 17)
+t_offset = datetime.timedelta(hours = 3)
 repeat = 0
 
 load_dotenv()
@@ -45,8 +45,9 @@ async def on_message(message):
     else:
         repeat = 0
         
-    if message.content().upper() == message.content():
-        response = "KEEP IT DOWN " + message.author() + "!"
-        await channel.send(response)
+    if message.content.upper() == message.content:
+        id = '<@' + str(message.author.id) + ">"
+        response = "KEEP IT DOWN " + id + "!"
+        await message.channel.send(response)
 
 client.run(TOKEN)
