@@ -39,7 +39,7 @@ async def on_message(message):
         response = "Hi " + str(message.content[3:]).strip() + ", I'm Dad!"
         await message.channel.send(response)
   
-    if str((message.created_at + t_offset).weekday()) == '6':
+    if str((message.created_at + t_offset).weekday()) == '5':
         if repeat == 0:
             repeat = 1
             channel = client.get_channel(289773173384151040)
