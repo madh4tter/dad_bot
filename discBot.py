@@ -46,10 +46,10 @@ async def on_message(message):
             await channel.send(file = discord.File('ah_yes.webm'))
     else:
         repeat = 0
-        
-    if message.content.upper() == message.content and message.content != "_ _" and message.type != discord.MessageType.pins_add:
-        id = '<@' + str(message.author.id) + ">"
-        response = "KEEP IT DOWN " + id + "!"
-        await message.channel.send(response)
+    ## Failed experiment, discord has too many edge cases that trigger this loop to make it worthwhile tryig to fix
+    #if message.content.upper() == message.content and message.content != "_ _" and message.type != discord.MessageType.pins_add:
+    #    id = '<@' + str(message.author.id) + ">"
+    #    response = "KEEP IT DOWN " + id + "!"
+    #    await message.channel.send(response)
 
 client.run(TOKEN)
