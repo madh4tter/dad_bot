@@ -15,9 +15,10 @@ t_offset = datetime.timedelta(hours = 3)
 repeat = 0
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DAD_TOKEN')
 
-client = discord.Client()
+game = 'GET OFF MY LAWN'
+client = discord.Client(activity=discord.Activity(type=discord.ActivityType.watching, name=game))
 
 @client.event
 async def on_message(message):
