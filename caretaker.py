@@ -35,11 +35,15 @@ async def on_message(message):
     match = check.search(message.content)
     if match:
         msg = message.content
+        if "||" in message.content: spoiler = True
         out = msg.replace(match[0], '')
         out = out.strip()
         id = '<@' + str(message.author.id) + ">"
         img = match[0]
         file = img.split("/")[-1]
+
+        if spoiler:
+            file = f"SPOILER_{file}"
 
         r = requests.get(img, stream=True)
 
@@ -51,9 +55,11 @@ async def on_message(message):
         else:
             await channel.send("pic not found")
             return
-        
+
         with open(file, 'rb') as g:
             outStr = '"' + out + '"' + ' - ' + id
+            if out == "" or out == "||||":
+                outStr = id
             await tasks.gather(message.channel.send(file=discord.File(g)), message.delete(), message.channel.send(outStr))
     
     
