@@ -56,7 +56,7 @@ async def on_message(message):
 @client.event
 async def on_typing(channel, user='134546892750061569', time=datetime.datetime.now()):
     id = "<@134546892750061569>"
-    x = random.randint(0,1)
+    x = random.randint(0,5)
     if x == 0:
         message = "shush " + id
         print('in loop')
