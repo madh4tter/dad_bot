@@ -53,4 +53,13 @@ async def on_message(message):
     #    response = "KEEP IT DOWN " + id + "!"
     #    await message.channel.send(response)
 
+@client.event
+async def on_typing(channel, user='134546892750061569', time=datetime.now()):
+    id = "<@134546892750061569>"
+    x = random.randint(0,1)
+    if x == 0:
+        message = "shush " + id
+        print('in loop')
+        await channel.send(message)
+
 client.run(TOKEN)
