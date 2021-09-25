@@ -54,7 +54,7 @@ async def on_message(message):
     #    await message.channel.send(response)
 
 @client.event
-async def on_typing(channel, user='134546892750061569', time=datetime.now()):
+async def on_typing(channel, user='134546892750061569', time=datetime.datetime.now()):
     id = "<@134546892750061569>"
     x = random.randint(0,1)
     if x == 0:
