@@ -35,7 +35,8 @@ async def on_message(message):
     match = check.search(message.content)
     if match:
         msg = message.content
-        if "||" in message.content: spoiler = True
+        if "||" in message.content: spoiler = True 
+        else: spoiler = False
         out = msg.replace(match[0], '')
         out = out.strip()
         id = '<@' + str(message.author.id) + ">"
