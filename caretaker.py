@@ -31,7 +31,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    check = re.compile(r"(http.*[.]jpg)")
+    check = re.compile(r"(https://p.*[.]jpg)")
     match = check.search(message.content)
     if match:
         msg = message.content
