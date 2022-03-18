@@ -3,6 +3,10 @@ import os
 import random
 import datetime
 import re
+import time
+
+import gtts
+from playsound import playsound
 
 import discord
 from discord import file
@@ -53,6 +57,23 @@ async def on_message(message):
     #    response = "KEEP IT DOWN " + id + "!"
     #    await message.channel.send(response)
 
+@client.event
+async def on_voice_state_update(member, before, after):
+    x = random.randint(0, 5)
+    if after.channel != None and x == 0:
+        connected = after.channel
+        time.sleep(1)
+        vc = await discord.VoiceChannel.connect(connected)
+        voiceString = str(member.display_name) + ", please be quiet"
+        print(voiceString)
+        tts = gtts.gTTS(voiceString)
+        tts.save("test.mp3")
+        audio_source = discord.FFmpegPCMAudio("test.mp3")
+        vc.play(audio_source, after=None)
+        time.sleep(3)
+        guild = member.guild.voice_client
+        os.remove("test.mp3")
+        await discord.VoiceClient.disconnect(guild)        
 
 #
 #@client.event
