@@ -59,7 +59,7 @@ async def on_message(message):
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    x = random.randint(0, 5)
+    x = random.randint(0, 49)
     if after.channel != None and x == 0:
         connected = after.channel
         time.sleep(1)
