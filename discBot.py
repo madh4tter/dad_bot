@@ -50,7 +50,7 @@ async def on_message(message):
         if repeatAh == 0:
             repeatAh = 1
             channel = client.get_channel(289773173384151040)
-            await channel.send(file = discord.File('ah_yes.webm'))
+            await channel.send(file = discord.File('/root/dad_bot/ah_yes.webm'))
     else:
         repeatAh = 0
 
@@ -58,7 +58,7 @@ async def on_message(message):
         if repeat20 == 0:
             repeat20 = 1
             channel = client.get_channel(289773173384151040)
-            await channel.send(file = discord.File('thurs20.jpg'))
+            await channel.send(file = discord.File('/root/dad_bot/thurs20.jpg'))
     else:
         repeat20 = 0
 
