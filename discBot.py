@@ -54,7 +54,7 @@ async def on_message(message):
     else:
         repeatAh = 0
 
-    if str((message.created_at + t_offset).weekday()) == '3' and str((message.created_at + t_offset).day()) == '20':
+    if str((message.created_at + t_offset).weekday()) == '3' and str((message.created_at + t_offset).day) == '20':
         if repeat20 == 0:
             repeat20 = 1
             channel = client.get_channel(289773173384151040)
