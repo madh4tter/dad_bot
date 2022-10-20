@@ -17,11 +17,12 @@ from discord.message import Message
 from dotenv import load_dotenv
 
 t_offset = datetime.timedelta(hours = 3)
-repeatAh = 0
-repeat20 = 0
 
 load_dotenv()
 TOKEN = os.getenv('DAD_TOKEN')
+
+repeatAh = 0
+repeat20 = 0
 
 game = 'GET OFF MY LAWN'
 client = discord.Client(activity=discord.Activity(type=discord.ActivityType.watching, name=game))
@@ -53,7 +54,7 @@ async def on_message(message):
             await channel.send(file = discord.File('/root/dad_bot/ah_yes.webm'))
     else:
         repeatAh = 0
-
+    print(repeat20)
     if str((message.created_at + t_offset).weekday()) == '3' and str((message.created_at + t_offset).day) == '20':
         if repeat20 == 0:
             repeat20 = 1
