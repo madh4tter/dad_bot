@@ -4,6 +4,7 @@ import random
 import datetime
 import re
 import time
+from timeit import repeat
 
 import gtts
 from playsound import playsound
@@ -16,7 +17,8 @@ from discord.message import Message
 from dotenv import load_dotenv
 
 t_offset = datetime.timedelta(hours = 3)
-repeat = 0
+repeatAh = 0
+repeat20 = 0
 
 load_dotenv()
 TOKEN = os.getenv('DAD_TOKEN')
@@ -45,12 +47,21 @@ async def on_message(message):
         await message.channel.send(response)
   
     if str((message.created_at + t_offset).weekday()) == '5':
-        if repeat == 0:
-            repeat = 1
+        if repeatAh == 0:
+            repeatAh = 1
             channel = client.get_channel(289773173384151040)
             await channel.send(file = discord.File('ah_yes.webm'))
     else:
-        repeat = 0
+        repeatAh = 0
+
+    if str((message.created_at + t_offset).weekday()) == '3' and str((message.created_at + t_offset).day()) == '20':
+        if repeat20 == 0:
+            repeat20 = 1
+            channel = client.get_channel(289773173384151040)
+            await channel.send(file = discord.File('thurs20.jpg'))
+    else:
+        repeat20 = 0
+
     ## Failed experiment, discord has too many edge cases that trigger this loop to make it worthwhile tryig to fix
     #if message.content.upper() == message.content and message.content != "_ _" and message.type != discord.MessageType.pins_add:
     #    id = '<@' + str(message.author.id) + ">"
