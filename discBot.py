@@ -29,7 +29,8 @@ client = discord.Client(activity=discord.Activity(type=discord.ActivityType.watc
 
 @client.event
 async def on_message(message):
-    global repeat
+    global repeatAh
+    global repeat20
     if message.author == client.user:
         return
 
@@ -54,7 +55,7 @@ async def on_message(message):
             await channel.send(file = discord.File('/root/dad_bot/ah_yes.webm'))
     else:
         repeatAh = 0
-    print(repeat20)
+
     if str((message.created_at + t_offset).weekday()) == '3' and str((message.created_at + t_offset).day) == '20':
         if repeat20 == 0:
             repeat20 = 1
