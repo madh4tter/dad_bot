@@ -22,7 +22,9 @@ load_dotenv()
 TOKEN = os.getenv('CARE_TOKEN')
 
 game = 'cleaning up peoples shit'
-bot = commands.Bot(command_prefix='', activity=discord.Game(name=game))
+intents = discord.Intents.default()
+intents.message_content = true
+bot = commands.Bot(command_prefix='', activity=discord.Game(name=game), intents=intents)
 
 
 @bot.event
