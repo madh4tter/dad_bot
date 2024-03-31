@@ -25,7 +25,9 @@ repeatAh = 0
 repeat20 = 0
 
 game = 'GET OFF MY LAWN'
-client = discord.Client(activity=discord.Activity(type=discord.ActivityType.watching, name=game))
+intents = discord.Intents.default()
+intents.message_content = true
+client = discord.Client(activity=discord.Activity(type=discord.ActivityType.watching, name=game), intents=intents)
 
 @client.event
 async def on_message(message):
