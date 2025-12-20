@@ -6,14 +6,12 @@ import re
 import time
 from timeit import repeat
 
-import gtts
-from playsound import playsound
-
 import discord
 from discord import file
 from discord.channel import TextChannel
 from discord.enums import MessageType
 from discord.message import Message
+from discord.voice_client import VoiceClient, VoiceProtocol
 from dotenv import load_dotenv
 
 t_offset = datetime.timedelta(hours = 3)
@@ -26,7 +24,7 @@ repeat20 = 0
 
 game = 'GET OFF MY LAWN'
 intents = discord.Intents.default()
-intents.message_content = true
+intents.message_content = True
 client = discord.Client(activity=discord.Activity(type=discord.ActivityType.watching, name=game), intents=intents)
 
 @client.event
@@ -54,7 +52,10 @@ async def on_message(message):
         if repeatAh == 0:
             repeatAh = 1
             channel = client.get_channel(289773173384151040)
-            await channel.send(file = discord.File('/root/dad_bot/ah_yes.webm'))
+            async for message in channel.history():
+                if message.author == client.user and message.attachments[0].filename == 'ah_yes.webm':
+                    return
+            await channel.send(file = discord.File('/root/dad_bot/media/ah_yes.webm'))
     else:
         repeatAh = 0
 
@@ -62,7 +63,7 @@ async def on_message(message):
         if repeat20 == 0:
             repeat20 = 1
             channel = client.get_channel(289773173384151040)
-            await channel.send(file = discord.File('/root/dad_bot/thurs20.jpg'))
+            await channel.send(file = discord.File('/root/dad_bot/media/thurs20.jpg'))
     else:
         repeat20 = 0
 
@@ -74,23 +75,14 @@ async def on_message(message):
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    x = random.randint(0, 49)
-    if after.channel != None and x == 0:
+    ## Plays Mariah Carey when a user joins a voice channel
+    if after.channel != None:
         connected = after.channel
-        time.sleep(1)
-        vc = await discord.VoiceChannel.connect(connected)
-        voiceString = str(member.display_name) + ", please be quiet"
-        print(voiceString)
-        tts = gtts.gTTS(voiceString)
-        tts.save("test.mp3")
-        audio_source = discord.FFmpegPCMAudio("test.mp3")
-        vc.play(audio_source, after=None)
-        time.sleep(3)
-        guild = member.guild.voice_client
-        os.remove("test.mp3")
-        await discord.VoiceClient.disconnect(guild)        
-
-#
+        voice = await connected.connect()
+        mariah(voice)
+        time.sleep(2)
+        await voice.disconnect()
+    
 #@client.event
 #async def on_typing(channel, user='134546892750061569', time=datetime.datetime.now()):
 #    id = "<@134546892750061569>"
@@ -99,5 +91,22 @@ async def on_voice_state_update(member, before, after):
 #        message = "shush " + id
 #        print('in loop')
 #        await channel.send(message)
+
+def mariah(voiceChannel):
+    currentDate = datetime.datetime.now()
+    weekdayNum = currentDate.strftime("%w")
+    if lastPlayed == weekdayNum:
+        return
+    if currentDate.hour < 9 or currentDate.month != 12 or currentDate.day < 20: ## Only plays between Dec 20 and Dec 25th (as files are named 1-5 for the days leading up to Xmas)
+        return
+    
+    try:
+        mariahFile = f"/root/dad_bot/media/mariah{weekdayNum}.mp3"
+        audio_source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(mariahFile))
+
+        voiceChannel.play(audio_source, after=None)
+        lastPlayed = weekdayNum
+    except Exception as e:
+        print(f"Error playing Mariah Carey: {e}")
 
 client.run(TOKEN)
