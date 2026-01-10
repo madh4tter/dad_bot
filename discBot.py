@@ -52,9 +52,9 @@ async def on_message(message):
         if repeatAh == 0:
             repeatAh = 1
             channel = client.get_channel(289773173384151040)
-            async for message in channel.history():
-                if message.author == client.user and message.attachments[0].filename == 'ah_yes.webm':
-                    return
+            # async for message in channel.history():
+            #     if message.author == client.user and message.attachments[0].filename == 'ah_yes.webm':
+            #         return
             await channel.send(file = discord.File('/root/dad_bot/media/ah_yes.webm'))
     else:
         repeatAh = 0
@@ -73,16 +73,7 @@ async def on_message(message):
     #    response = "KEEP IT DOWN " + id + "!"
     #    await message.channel.send(response)
 
-@client.event
-async def on_voice_state_update(member, before, after):
-    ## Plays Mariah Carey when a user joins a voice channel
-    if after.channel != None:
-        connected = after.channel
-        voice = await connected.connect()
-        mariah(voice)
-        time.sleep(2)
-        await voice.disconnect()
-    
+
 #@client.event
 #async def on_typing(channel, user='134546892750061569', time=datetime.datetime.now()):
 #    id = "<@134546892750061569>"
@@ -92,21 +83,34 @@ async def on_voice_state_update(member, before, after):
 #        print('in loop')
 #        await channel.send(message)
 
-def mariah(voiceChannel):
-    currentDate = datetime.datetime.now()
-    weekdayNum = currentDate.strftime("%w")
-    if lastPlayed == weekdayNum:
-        return
-    if currentDate.hour < 9 or currentDate.month != 12 or currentDate.day < 20: ## Only plays between Dec 20 and Dec 25th (as files are named 1-5 for the days leading up to Xmas)
-        return
-    
-    try:
-        mariahFile = f"/root/dad_bot/media/mariah{weekdayNum}.mp3"
-        audio_source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(mariahFile))
 
-        voiceChannel.play(audio_source, after=None)
-        lastPlayed = weekdayNum
-    except Exception as e:
-        print(f"Error playing Mariah Carey: {e}")
+""" CHRISTMAS MARIAH CAREY VOICE CHANNEL JOIN - DISABLED FOR NOW """
+# @client.event
+# async def on_voice_state_update(member, before, after):
+#     ## Plays Mariah Carey when a user joins a voice channel
+#     if after.channel != None:
+#         connected = after.channel
+#         voice = await connected.connect()
+#         mariah(voice)
+#         time.sleep(2)
+#         await voice.disconnect()
+    
+
+# def mariah(voiceChannel):
+#     currentDate = datetime.datetime.now()
+#     weekdayNum = currentDate.strftime("%w")
+#     if lastPlayed == weekdayNum:
+#         return
+#     if currentDate.hour < 9 or currentDate.month != 12 or currentDate.day < 20: ## Only plays between Dec 20 and Dec 25th (as files are named 1-5 for the days leading up to Xmas)
+#         return
+    
+#     try:
+#         mariahFile = f"/root/dad_bot/media/mariah{weekdayNum}.mp3"
+#         audio_source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(mariahFile))
+
+#         voiceChannel.play(audio_source, after=None)
+#         lastPlayed = weekdayNum
+#     except Exception as e:
+#         print(f"Error playing Mariah Carey: {e}")
 
 client.run(TOKEN)
